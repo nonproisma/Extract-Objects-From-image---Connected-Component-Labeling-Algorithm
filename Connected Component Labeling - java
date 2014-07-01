@@ -2,7 +2,8 @@ Extract-Objects-From-image---Connected-Component-Labeling-Algorithm
 ===================================================================
 
 Extracting Objects From image - Connected Component Labeling Algorithm
-// cclabel method take binary array and width of image and return array of array each array contains the x,y coordinates of one object
+// cclabel method take binary array and width of image and return array of array 
+each array contains the x,y coordinates of one object
 
 package ocr;
 import java.util.ArrayList;
