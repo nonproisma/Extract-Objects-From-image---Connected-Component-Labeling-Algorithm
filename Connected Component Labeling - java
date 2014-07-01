@@ -2,3 +2,72 @@ Extract-Objects-From-image---Connected-Component-Labeling-Algorithm
 ===================================================================
 
 Extracting Objects From image - Connected Component Labeling Algorithm
+// cclabel method take binary array and width of image and return array of array each array contains the x,y coordinates of one object
+
+package ocr;
+import java.util.ArrayList;
+
+public class cclabeling
+{
+   int neighbourindex;ArrayList<Integer> Temp;
+   ArrayList<ArrayList<Integer>> cc=new ArrayList<>();
+
+    public int[][][] cclabel(boolean[] Main,int w){
+        /*this method make array of arrays “cc”  each array contains 
+        the indexes of pixels of one connected component – Main => binary array of image – w => width of image*/
+long start=System.nanoTime();
+
+int len=Main.length;int id=0;
+int[] dir={-w-1,-w,-w+1,-1,+1,+w-1,+w,+w+1};
+for(int i=0;i<len;i+=1){
+if(Main[i]){
+   
+Temp=new ArrayList<>();
+Temp.add(i);
+for(int x=0;x<Temp.size();x+=1){
+id=Temp.get(x);
+for(int u=0;u<8;u+=1){
+neighbourindex=id+dir[u];
+    if(Main[neighbourindex]){ 
+    Temp.add(neighbourindex);
+    Main[neighbourindex]=false;
+                }
+                        }
+Main[id]=false;
+
+}
+cc.add(Temp);
+
+}
+}
+
+int[][][] xycc=new int[cc.size()][][];
+int x;int y;
+for(int i=0;i<cc.size();i+=1){
+     xycc[i]=new int[cc.get(i).size()][2];
+    
+    for(int v=0;v<cc.get(i).size();v+=1){
+        y=Math.round(cc.get(i).get(v)/w);
+        x=cc.get(i).get(v)-y*w;
+        
+       xycc[i][v][0]=x;
+       xycc[i][v][1]=y;
+    }
+    
+}
+long end=System.nanoTime();
+long time=end-start;
+    
+Frames.Data[3]=time/1000000;
+Frames.Data[4]=xycc.length;
+
+
+//System.out.println("Connected Component Labeling Time =>"+time+" milliseconds");
+//System.out.println("Number Of Shapes => "+xycc.length);
+
+    return  xycc;
+ 
+    }
+
+}
+    
